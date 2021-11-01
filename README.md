@@ -51,7 +51,15 @@ Other important notes for entering production are as follows.
     - Regularly pass in labeled data to test output consistency and to see if there a degradation in model accuracy
     - Data input monitoring to ensure that the data is valid and within an expected range
 - API Authentication and Authorization
-    
+
+
+## Running the API locally:
+
+Please use the following bash command where your current directory is the root of this folder:
+
+```nashorn js
+uvicorn api:api --host 0.0.0.0 --port 5001 --reload
+```
 ## Usage:
 
 Below is a usage example of how to call the API. To see the available endpoints you can go to the API docs. You can access these if the API
