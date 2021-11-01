@@ -12,13 +12,14 @@ that it's not really doing much in the way of classification.
 
 ## Model Deployment into a Development Environment
 
-The inference service was built using FastAPI and deployed to Amazon AppRunner. It works as a hosted serviced and can provide a basic result 
+The inference service was built using *FastAPI* and deployed to *Amazon AppRunner*. It works as a hosted service and can provide a basic result 
 once a properly formatted JSON object is sent to the "predict" end point as follows:
 
 The DevOps pipeline is primarily being taken care of by Amazon AppRunner in this case which is actively monitoring GitHub and 
 is pulling the latest changes to the service to be deployed. 
 
 ## TODO to get to production:
+- Add logging to API
 - Model Versioning 
 - API Versioning 
 - Regression Tests of the service
@@ -42,7 +43,7 @@ https://x3ipkw9r3p.us-east-1.awsapprunner.com/docs
 ### Input via CURL:
 ```sh
 curl -X 'POST' \
-  'http://localhost:5001/predict/' \
+  'http://https://x3ipkw9r3p.us-east-1.awsapprunner.com/predict/' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
