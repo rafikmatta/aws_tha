@@ -55,6 +55,9 @@ Other important notes for entering production are as follows.
 
 ## Running the API locally:
 
+You should be running a Python 3.8 or greater environment with all the dependencies listed in the requirements.txt installed. 
+
+
 Please use the following bash command where your current directory is the root of this folder:
 
 ```nashorn js
