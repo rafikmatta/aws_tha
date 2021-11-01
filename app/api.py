@@ -4,21 +4,18 @@ import pandas as pd
 import pickle
 import uvicorn
 from datetime import datetime
-
-from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
 
 class MaintenanceMetrics(BaseModel):
     metric1: int
-    metric_2: float
-    metric_3: float
-    metric_4: float
-    metric_5: float
-    metric_6: float
-    metric_7: float
-    metric_8: float
-    metric_9: float
+    metric2: int
+    metric3: int
+    metric4: int
+    metric5: int
+    metric6: int
+    metric7: int
+    metric9: int
 
 
 # Instantiating FastAPI
@@ -53,7 +50,10 @@ async def basic_predict(m: MaintenanceMetrics):
     else:
         pred_class = "Non-Failure"
 
-    result = {"timestamp": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), "class": pred_class, "probability": str(pred_prob*100) + "%"}
+    result = {"timestamp": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+              "class": pred_class,
+              "probability": str(pred_prob * 100) + "%"}
+
     return JSONResponse(content=result)
 
 
