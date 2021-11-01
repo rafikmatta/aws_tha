@@ -1,33 +1,56 @@
 # AWS Take Home Assignement - Rafik Matta
 
+## Business Value
+
+This device failure prediction API leverages machine learning to take in real-time device metrics and determine the probability of 
+device failure or non-failure.
+
+This can be used and integrated into the companies maintenance solutions to address maintenance needs. It can help prempetively determine
+how close a device might be to failure. 
+
+This can save the company hours and money spent on regular maintenance and allow them to build a maintenance process that is more 
+ad-hoc in nature. 
+
 ## Model Development
+
 We have a classification problem with 2 classes. Failure and Non- Failure of the device. After some exploratory data analysis 
 two major points stand out:
 - There is a massive class imbalance favouring the Non-Failure class
 - We need to better understand what each of the features labeled "metric" as those numbers are almost meaningless
 - It is challenging to do feature engineering/selection without the previous point being addressed
 
-Overall, a Logistic Regression model was chosen and seemed to perform well from an accuracy perspective, but the ROC curve shows us
-that it's not really doing much in the way of classification. 
+Two classification models were tested (Logit and Decision Tree) and Decision Tree was chosen and seemed to perform well from an accuracy perspective, as well as reducing 
+false positive and false negative rates as the client requested. That being said, there is some suspicion that model might be 
+overfitting and further investigation is needed by doing things such as reviewing validation curves etc. assuming time permits.
+
+We did not use the specific device as a feature. This was an intentional choice. Keeping the model device agnostic helps 
+us maintain some flexibility in the prediction. This is assuming that the devices are all essentially the same, but if the metrics
+have different meanings per device we would need to adjust the model to incorporate device info.
 
 ## Model Deployment into a Development Environment
 
-The inference service was built using *FastAPI* and deployed to *Amazon AppRunner*. It works as a hosted service and can provide a basic result 
-once a properly formatted JSON object is sent to the "predict" end point as follows:
+The inference service was built using *FastAPI* and deployed to *Amazon AppRunner*. It works as a hosted service and can provide a prediction result and probability
+of failure/non-failure once a properly formatted JSON object is sent to the "/predict" end point.
 
-The DevOps pipeline is primarily being taken care of by Amazon AppRunner in this case which is actively monitoring GitHub and 
-is pulling the latest changes to the service to be deployed. 
+The DevOps pipeline is primarily being taken care of by Amazon AppRunner which is actively monitoring GitHub and 
+is pulling the latest changes to the service to be deployed. An extension of this in the future would be to make the deployment tagged
+and branch specific to ensure we are releasing properly tested versions of the model API.
+
+One thing that is missing from the CI pipeline is automated unit and regression testing. Those can be incorporated in a few different ways
+and using different hosted services. These would serve as important gates to deployment to ensure only correct code goes out.
+
+Other important notes for entering production are as follows. 
 
 ## TODO to get to production:
 - Add logging to API
-- Model Versioning 
-- API Versioning 
-- Regression Tests of the service
+- Model Versioning (and hosting model files on S3)
+- API Versioning (or using GraphQL instead)
+- Add unit and regression tests of the service
 - Model Monitoring 
     - Monitor API logs to track how the model is performing and making predictions
     - Regularly pass in labeled data to test output consistency and to see if there a degradation in model accuracy
-- API Security
-    
+    - Data input monitoring to ensure that the data is valid and within an expected range
+- API Authentication and Authorization
     
 ## Usage:
 
@@ -66,3 +89,5 @@ curl -X 'POST' \
   "probability": "100.0%"
 }
 ```
+
+This API can be called using any HTTP client library for any language. 
