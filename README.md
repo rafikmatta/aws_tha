@@ -1,4 +1,4 @@
-# AWS Take Home Assignement - Rafik Matta
+# AWS Example
 
 ## Business Value
 
