@@ -1,4 +1,4 @@
-# AWS Example
+# AWS Inference Service Project
 
 ## Business Value
 
